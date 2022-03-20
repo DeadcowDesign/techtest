@@ -8,7 +8,7 @@ namespace Application;
  * JSON with headers.
  * Also contains all of our default values.
  */
-class ApiBaseClass
+abstract class ApiBaseClass
 {
     protected string $sl_token = '';
     protected string $apiUrl   = 'https://api.supermetrics.com/assignment/';
@@ -26,13 +26,14 @@ class ApiBaseClass
      * going to ensure that we aren't getting a token error from the server,
      * and that our token is set to something.
      * TODO - look at whether we could cache this somewhere so we only need to
-     * request it once it expires.
+     * request it once it expires. Add better error checking in case this goes wrong.
      *
      * @return string The API token from the auth server
      */
     protected function getSlToken() :string
     {
         $data = $this->runCurl(array('name' => $this->userName, 'email' => $this->email, 'client_id' => $this->clientId), true, 'register');
+
         $this->sl_token = $data->data->sl_token;
 
         return $this->sl_token;
@@ -83,12 +84,30 @@ class ApiBaseClass
         // isn't right.
         if (!gettype($decodedData) == 'object') {
 
-            return new StdClass();
+            return new \StdClass();
 
         } else {
 
             return $decodedData;
         }
+    }
+
+    /**
+     * addErrorMessage - if something goes wrong, we can use this to add an
+     * optional error message to the return data.
+     *
+     * @param string $message
+     * @return object
+     */
+    protected function addErrorMessage(string $message = '') :object
+    {
+        if (!$this->responseData) {
+            $this->responseData = new \StdClass();
+        }
+
+        $this->responseData->error = $message;
+
+        return $this->responseData;
     }
 
     /**
