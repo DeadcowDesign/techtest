@@ -13,22 +13,6 @@ class GetPostsByPage extends ApiBaseClass
     protected $page = 1;
     protected $maxPage = 10;
 
-    public function __construct()
-    {
-
-        // If we have a valid page number supplied as GET then
-        // return those pages. Else use page one.
-        if (isset($_GET['page'])) {
-
-            $page = intval($_GET['page'], 10);
-
-            if ( ($page >= $this->page) && ($page <= $this->maxPage) ) {
-
-                $this->page = $page;
-            }
-        }
-    }
-
     /**
      * getPostsByPage - this will allow us to pull a
      * paginated list of posts from the API endpoint.
@@ -40,8 +24,20 @@ class GetPostsByPage extends ApiBaseClass
      * 
      * @return $posts Object An object containing raw post data
      */
-    public function getPostsByPage(int $page = 0) :object
+    public function getPostsByPage() :object
     {
+        // If we are passed a GET then we use that. If not, or it's invalid, then
+        // we fall back to presenting page one.
+        if (isset($_GET['page'])) {
+
+            $page = intval($_GET['page'], 10);
+
+            if ( ($page >= $this->page) && ($page <= $this->maxPage) ) {
+
+                $this->page = $page;
+            }
+        }
+
         $data = new \StdClass();
 
         // If we don't have a valid sl token set, the get one.
