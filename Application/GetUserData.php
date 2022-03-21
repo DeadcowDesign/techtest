@@ -144,7 +144,7 @@ class GetUserData extends ApiBaseClass
         ksort($dates);
 
         $this->userData->totalPosts        = $totalPosts;
-        $this->userData->averageCharacters = $totalCharacters / $totalPosts;
+        $this->userData->averageCharacters = round($totalCharacters / $totalPosts, 0);
         $this->userData->longestPost       = $longestPost;
         $this->userData->postMonths        = $dates;
 
