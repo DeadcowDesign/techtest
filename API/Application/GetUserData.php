@@ -143,6 +143,12 @@ class GetUserData extends ApiBaseClass
 
         ksort($dates);
 
+        if (!$totalPosts) {
+            $this->responseCode = 404;
+            $this->userData = new \StdClass();
+            return $this->userData;
+        }
+
         $this->userData->totalPosts        = $totalPosts;
         $this->userData->averageCharacters = round($totalCharacters / $totalPosts, 0);
         $this->userData->longestPost       = $longestPost;

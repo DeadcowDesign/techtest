@@ -119,6 +119,7 @@ abstract class ApiBaseClass
      */
     public function doResponse() :void
     {
+        header('Access-Control-Allow-Origin: *');
         header('Content-type: application/json');
         http_response_code($this->responseCode);
         echo json_encode($this->responseData);
