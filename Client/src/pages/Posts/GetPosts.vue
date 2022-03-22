@@ -1,4 +1,5 @@
 <template>
+<div class="component">
     <h2>Page {{currentPage}}</h2>
     <div class="container card-container" v-if="posts && posts.length">
         <div class="card bg-primary text-white" v-for="post of posts" :key="post.id">
@@ -16,8 +17,8 @@
         </ul>
       </nav>
     </div>
+</div>
 </template>
-
 <script>
 
 import { defineComponent } from '@vue/runtime-core';

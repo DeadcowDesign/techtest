@@ -1,4 +1,5 @@
 <template>
+<div class="component">
   <div class="container">
     <h2>Dashboard</h2>
     <select class="form-select" v-model="getuser">
@@ -51,8 +52,8 @@
         </div>
     </div>
   </div>
+</div>
 </template>
-
 <script>
 
 import { defineComponent } from '@vue/runtime-core';
