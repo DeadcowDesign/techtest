@@ -1,23 +1,30 @@
-# Supermetrics Technical Assesment
+# Hi, Supermetrics!
+Thanks for taking the time to talk to me the other day. Here is my technical assessment as requested.
 ## Methodology and Justification
+### Server Side
+Post gathering and parsing is mostly performed server-side with the exception of some minor formatting which is done in the Vue application.
 
-Post gathering and parsing is performed server-side. As the post return from the API is monolithic (it includes all posts for all users) - this would enable us to add a caching system for large data-sets that do not regularly change. It also allows us to sort and cache subsets of the data for faster processing (for example, sorting by user). _Note that I will not provide a cache system for the purposes of this technical test as it is out of scope, however, I would perform this by writing flat json files which could be checked for validity and returned in favour of an API call._
+The server-side application is built by using an abstract base class which contains common functionality for the GetPostsByPage and GetUserData classes. This is to ensure that the code remains in easily maintainable files with strongly separated concerns.
 
-The application is built using TDD, with tests and scope being defined before code is written to ensure that code is robust.
+The Application uses a naming convention that would allow it to work with an SPL Autoloader with minimal (or zero) configuration.
+
+The classes are coded to a tweaked version of PSR-2 standards (I prefer some extra spacing around my logic blocks), and use DocBlock comments.
+
+There is a suite of PHP unit tests in the 'tests->php' folder.
+### Client Side
+The client side application is built with Vue. My exposure to SPA JavaScript frameworks is limited, so I'm afraid I had to learn Vue from scratch for this, so I hope that the client-side app looks ok.
+
+The client side consists of three apps, a homepage (with a copy of this message), a 'posts' page, which has the post listing, and a 'dashboard' page for displaying each user's post date.
+
+For convenience, I've added a function to the dashboards page that fetches all the available users, and allows you to select one from a drop-down menu, which will then load their dashboard.
+
+I haven't added much in the way of styling, but I've used Bootstrap in there for some basic structure.
 
 ## Application Structure
-### Server-side
+### Server-side (API)
 * Application
-  * PHP Application files - Note that this folder and its contained files are uppercased to allow it to work with a minimal config SPL Autoloader and PSR-2 coding guidelines. This also separates the Application in the structure from the other files.
+  * PHP Application files
 * tests
   * PHP - PHP Unit tests
-### Client-side
-* src 
-  * SCSS files
-  * raw JS files
-
-  * Front end Unit tests
-* js
-  * parsed Javascript files
-* css 
-  * parsed css files
+### Client-side (Client)
+* Standard Vue CLI configuration
